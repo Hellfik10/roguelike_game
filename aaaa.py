@@ -35,13 +35,14 @@ if __name__ == '__main__':
     enemys = Group()
     v = 1.5
 
-    new_enemy = creatures.Enemy(screen, [20, 20])
+    new_enemy = creatures.Enemy(screen, [200, 200])
     enemys.add(new_enemy)
 
     while True:
         controls.events(screen, player, bullets, WIDTH, HEIGHT)
         screen.fill('black')
         controls.update_bullets(enemys, bullets, WIDTH, HEIGHT)
+        controls.update_enemy(enemys, player)
         bullets.draw(screen)
         enemys.draw(screen)
         player.output()

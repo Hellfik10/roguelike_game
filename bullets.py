@@ -2,9 +2,9 @@ import pygame
 from load import load_image
 
 
-class Bullet(pygame.sprite.Sprite):
+class Players_bullet(pygame.sprite.Sprite):
     def __init__(self, screen, creature, click_x, click_y):
-        super(Bullet, self).__init__()
+        super(Players_bullet, self).__init__()
         self.screen = screen
         self.image = load_image('bullet.png')
         self.pos = pygame.math.Vector2(creature.rect.centerx, creature.rect.centery)
