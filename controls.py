@@ -50,6 +50,6 @@ def events(screen, player, p, bullets, w, h):
 def update_bullets(enemys, bullets, w, h):
     bullets.update()
     for bullet in bullets.copy():
-        if bullet.rect.x < 50 or bullet.rect.x > w - 50 or bullet.rect.y < 50 or bullet.rect.y > h - 50:
+        if bullet.rect.x < 50 or bullet.rect.right > w - 50 or bullet.rect.y < 50 or bullet.rect.bottom > h - 50:
             bullets.remove(bullet)
     collisions = pygame.sprite.groupcollide(bullets, enemys, True, True)

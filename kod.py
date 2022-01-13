@@ -16,12 +16,6 @@ pygame.display.set_caption('roguelike_game')
 FPS = 60
 clock = pygame.time.Clock()
 
-
-def terminate():
-    pygame.quit()
-    sys.exit()
-
-
 map = map.Map(width, height, screen)
 
 player = creatures.Player(screen)

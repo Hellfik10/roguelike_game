@@ -22,24 +22,51 @@ class Map:
         self.numbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 
     def new_level(self):
-        self.pos_player = (self.width // 2, self.height // 2)
-        self.rooms_count = randint(4, 6)
+        for i in sprite_groups.player_group:
+            i.player_pos((self.width // 2, self.height // 2))
+
+        rooms_count = randint(4, 6)
+
+        self.rooms = []
+
+        for i in range(rooms_count):
+            if 'prize room' not in self.rooms:
+                self.rooms.append('prize room')
+            else:
+                self.rooms.append('battle room')
+
         self.fon = self.fon_open_door
         self.door_state = True
 
-    def generate_room(self):
-        self.fon = self.fon_close_door
-        self.pos_player = (self.width // 2, 530)
-        self.door_state = False
-        enemy_count = randint(4, 6)
-        positions = sample(self.numbs, enemy_count)
+        print(self.rooms)
 
-        for i in range(enemy_count):
-            new_enemy = creatures.Enemy(self.screen, self.possible_position[positions[i]])
-            sprite_groups.enemys.add(new_enemy)
+    def generate_room(self):
+        room = sample(self.rooms, 1)[0]
+
+        del self.rooms[self.rooms.index(room)]
+
+        if room == 'prize room':
+            pass
+        elif room == 'battle room':
+            self.fon = self.fon_close_door
+            self.door_state = False
+
+            enemy_count = randint(4, 6)
+
+            positions = sample(self.numbs, enemy_count)
+
+            for i in range(enemy_count):
+                new_enemy = creatures.Enemy(self.screen, self.possible_position[positions[i]])
+                sprite_groups.enemys.add(new_enemy)
 
     def next_room(self, p):
         if p:
+            if len(self.rooms) == 0:
+                self.new_level()
+            else:
+                for i in sprite_groups.player_group:
+                    i.player_pos((400, 525))
+
             self.generate_room()
 
     def pos_player_get(self):
@@ -47,6 +74,7 @@ class Map:
 
     def fon_get(self):
         fon_rect = self.fon.get_rect()
+
         return self.fon, fon_rect
 
     def door_state_get(self):
