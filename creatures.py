@@ -1,10 +1,12 @@
 import pygame
 from load import load_image
+import sprite_groups
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, screen):
         super(Player, self).__init__()
+        self.add(sprite_groups.all_sprites)
         self.screen = screen
         self.image = load_image('mario.png')
         self.rect = self.image.get_rect()
@@ -14,6 +16,18 @@ class Player(pygame.sprite.Sprite):
 
     def output(self):
         self.screen.blit(self.image, self.rect)
+
+    def update(self):
+        sp = []
+        if pygame.sprite.spritecollideany(self, sprite_groups.left):
+            sp.append(1)
+        if pygame.sprite.spritecollideany(self, sprite_groups.right):
+            sp.append(2)
+        if pygame.sprite.spritecollideany(self, sprite_groups.top):
+            sp.append(3)
+        if pygame.sprite.spritecollideany(self, sprite_groups.bottom):
+            sp.append(4)
+        return sp
 
 
 class Enemy(pygame.sprite.Sprite):

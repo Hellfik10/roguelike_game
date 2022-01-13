@@ -13,7 +13,7 @@ screen = pygame.display.set_mode(size)
 
 pygame.display.set_caption('roguelike_game')
 
-FPS = 50
+FPS = 60
 clock = pygame.time.Clock()
 
 
@@ -36,10 +36,10 @@ sprite_groups.bottom.add(border3)
 border4 = Border(750, 50, 750, 550)
 sprite_groups.right.add(border4)
 
-door = door.Door()
+door = door.Door(screen)
 
 while True:
-    controls.events(screen, player, bullets, width, height)
+    controls.events(screen, player, player.update(), bullets, width, height)
     screen.fill('black')
     sprite_groups.all_sprites.draw(screen)
     screen.blit(map.fon_get()[0], map.fon_get()[1])
@@ -48,6 +48,7 @@ while True:
     sprite_groups.enemys.draw(screen)
     player.output()
     map.next_room(door.update(map.door_state_get(), map))
+    door.output()
 
     pygame.display.flip()
     clock.tick(FPS)

@@ -7,7 +7,7 @@ player_group = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 enemys = pygame.sprite.Group()
 
-headers_group = pygame.sprite.Group()
+# headers (бортики)
 top = pygame.sprite.Group()
 bottom = pygame.sprite.Group()
 left = pygame.sprite.Group()

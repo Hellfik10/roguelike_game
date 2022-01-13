@@ -50,4 +50,8 @@ class Map:
         return self.fon, fon_rect
 
     def door_state_get(self):
+        if len(sprite_groups.enemys) == 0:
+            self.fon = self.fon_open_door
+            self.door_state = True
+
         return self.door_state
