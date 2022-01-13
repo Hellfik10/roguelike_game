@@ -2,6 +2,8 @@ import pygame
 from load import load_image
 import sprite_groups
 
+v = 1
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, screen):
@@ -42,3 +44,24 @@ class Enemy(pygame.sprite.Sprite):
 
     def output(self):
         self.screen.blit(self.image, self.rect)
+
+    def moving_away(self, player, hunting):
+        if hunting:
+            if self.rect.centerx < player.rect.centerx:
+                self.rect.centerx += v
+            else:
+                self.rect.centerx -= v
+            if self.rect.centery < player.rect.centery:
+                self.rect.centery += v
+            else:
+                self.rect.centery -= v
+        else:
+            if 75 < self.rect.centerx < player.rect.centerx:
+                self.rect.centerx -= v
+            elif 730 > self.rect.centerx > player.rect.centerx:
+                self.rect.centerx += v
+            if 75 < self.rect.centery < player.rect.centery:
+                self.rect.centery -= v
+            elif 530 > self.rect.centery > player.rect.centery:
+
+                self.rect.centery += v

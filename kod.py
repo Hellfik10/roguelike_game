@@ -40,6 +40,7 @@ door = door.Door(screen)
 
 while True:
     controls.events(screen, player, player.update(), bullets, width, height)
+    controls.update_enemys(sprite_groups.enemys, player)
     screen.fill('black')
     sprite_groups.all_sprites.draw(screen)
     screen.blit(map.fon_get()[0], map.fon_get()[1])
