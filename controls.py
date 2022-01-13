@@ -1,7 +1,8 @@
 import pygame, sys
-from pygame.sprite import Group
 from bullets import Bullet
+import sprite_groups
 v = 2
+mod = 1.5
 
 
 def events(screen, player, bullets, w, h):
@@ -33,16 +34,16 @@ def events(screen, player, bullets, w, h):
             player.rect.centerx -= v
             player.side = 'left'
         if pygame.key.get_pressed()[pygame.K_w]:
-            player.rect.centery -= v
+            player.rect.centery -= v * mod
             player.side = 'top'
         if pygame.key.get_pressed()[pygame.K_s]:
-            player.rect.centery += v
+            player.rect.centery += v * mod
             player.side = 'bottom'
 
         # Атака
         if event.type == pygame.MOUSEBUTTONDOWN:
             new_bullet = Bullet(screen, player, event.pos[0], event.pos[1])
-            bullets.add(new_bullet)
+            sprite_groups.bullets.add(new_bullet)
 
 
 def update_bullets(enemys, bullets, w, h):

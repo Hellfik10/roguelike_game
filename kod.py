@@ -39,7 +39,7 @@ sprite_groups.right.add(border4)
 door = door.Door()
 
 while True:
-    controls.events(screen, player, player.update(), bullets, width, height)
+    controls.events(screen, player, bullets, width, height)
     screen.fill('black')
     sprite_groups.all_sprites.draw(screen)
     screen.blit(map.fon_get()[0], map.fon_get()[1])
