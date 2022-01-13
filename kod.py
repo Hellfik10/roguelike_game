@@ -1,7 +1,6 @@
 import sys
 import pygame
 import map
-from border import Border
 import creatures
 import sprite_groups
 import controls
@@ -20,15 +19,6 @@ map = map.Map(width, height, screen)
 
 player = creatures.Player(screen)
 sprite_groups.player_group.add(player)
-
-border1 = Border(50, 50, 750, 50)
-sprite_groups.top.add(border1)
-border2 = Border(50, 50, 50, 550)
-sprite_groups.left.add(border2)
-border3 = Border(50, 550, 750, 550)
-sprite_groups.bottom.add(border3)
-border4 = Border(750, 50, 750, 550)
-sprite_groups.right.add(border4)
 
 door = door.Door(screen)
 

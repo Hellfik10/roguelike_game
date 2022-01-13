@@ -23,13 +23,13 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         sp = []
-        if pygame.sprite.spritecollideany(self, sprite_groups.left):
+        if self.rect.left <= 50:
             sp.append(1)
-        if pygame.sprite.spritecollideany(self, sprite_groups.right):
+        if self.rect.right >= 750:
             sp.append(2)
-        if pygame.sprite.spritecollideany(self, sprite_groups.top):
+        if self.rect.top <= 50:
             sp.append(3)
-        if pygame.sprite.spritecollideany(self, sprite_groups.bottom):
+        if  self.rect.bottom >= 550:
             sp.append(4)
         return sp
 
