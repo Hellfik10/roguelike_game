@@ -1,15 +1,19 @@
 import pygame, sys
 from pygame.sprite import Group
-from bullets import Bullet
+from bullets import Player_bullet
 import sprite_groups
 
 v = 5
 
 
-def events(screen, player, p, bullets, w, h):
+def events(screen, player, enemys, p):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        if event.type == pygame.USEREVENT:
+            for enemy in sprite_groups.enemys.copy():
+                enemy.shooting(player)
+                print(1)
 
         # Перемещение
         if pygame.key.get_pressed()[pygame.K_d] and pygame.key.get_pressed()[pygame.K_w] and 2 not in p and 3 not in p:
@@ -43,16 +47,16 @@ def events(screen, player, p, bullets, w, h):
 
         # Атака
         if event.type == pygame.MOUSEBUTTONDOWN:
-            new_bullet = Bullet(screen, player, event.pos[0], event.pos[1])
-            sprite_groups.bullets.add(new_bullet)
+            new_bullet = Player_bullet(screen, player, event.pos[0], event.pos[1])
+            sprite_groups.players_bullets.add(new_bullet)
 
 
-def update_bullets(enemys, bullets, w, h):
+def update_bullets(enemys, bullets, w, h, lives=True):
     bullets.update()
     for bullet in bullets.copy():
-        if bullet.rect.x < 50 or bullet.rect.x > w - 50 or bullet.rect.y < 50 or bullet.rect.y > h - 50:
+        if bullet.rect.x < 50 or bullet.rect.right > w - 50 or bullet.rect.y < 50 or bullet.rect.bottom > h - 50:
             bullets.remove(bullet)
-    collisions = pygame.sprite.groupcollide(bullets, enemys, True, True)
+    collisions = pygame.sprite.groupcollide(bullets, enemys, True, lives)
 
 
 def update_enemys(enemys, player):
