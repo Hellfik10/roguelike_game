@@ -68,7 +68,8 @@ class Enemy(pygame.sprite.Sprite):
                 self.rect.centery += v
 
     def shooting(self, player):
-        if ((self.rect.centery - player.rect.centery) ** 2 + (self.rect.centerx - player.rect.centerx) ** 2) ** 0.5 > 0:
+        if ((self.rect.centery - player.rect.centery) ** 2 + (
+                self.rect.centerx - player.rect.centerx) ** 2) ** 0.5 > 125:
             new_bullet = bullets.Enemy_bullet(self.screen, self, player.rect.centerx, player.rect.centery)
             sprite_groups.enemys_bullets.add(new_bullet)
             print(len((sprite_groups.enemys_bullets)))
