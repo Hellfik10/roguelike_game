@@ -68,16 +68,13 @@ class Player(pygame.sprite.Sprite):
                 self.timer = 0
                 self.cur_frame = (self.cur_frame + 1) % len(self.walkRight)
                 self.image = self.walkRight[self.cur_frame]
-        if self.mleft and 'block left' not in self.possibility_of_movement():
+        elif self.mleft and 'block left' not in self.possibility_of_movement():
             self.timer += 1
             if self.timer == 5:
                 self.timer = 0
                 self.cur_frame = (self.cur_frame + 1) % len(self.walkLeft)
                 self.image = self.walkLeft[self.cur_frame]
-        if not (self.mright and 'block right' not in self.possibility_of_movement()) and \
-            not(self.mleft and 'block left' not in self.possibility_of_movement()) and \
-            not (self.mup and 'block up' not in self.possibility_of_movement()) and \
-            not (self.mdown and 'block down' not in self.possibility_of_movement()):
+        else:
             self.timer1 = 0
             self.cur_frame = (self.cur_frame + 1) % len(self.afk)
             self.image = self.afk[self.cur_frame]
