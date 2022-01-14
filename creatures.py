@@ -18,18 +18,22 @@ class Player(pygame.sprite.Sprite):
         self.rect.centerx = self.screen_rect.centerx
         self.rect.centery = self.screen_rect.centery
 
+    def player_pos(self, pos):
+        self.rect.centerx = pos[0]
+        self.rect.centery = pos[1]
+
     def output(self):
         self.screen.blit(self.image, self.rect)
 
     def update(self):
         sp = []
-        if pygame.sprite.spritecollideany(self, sprite_groups.left):
+        if self.rect.left <= 50:
             sp.append(1)
-        if pygame.sprite.spritecollideany(self, sprite_groups.right):
+        if self.rect.right >= 750:
             sp.append(2)
-        if pygame.sprite.spritecollideany(self, sprite_groups.top):
+        if self.rect.top <= 50:
             sp.append(3)
-        if pygame.sprite.spritecollideany(self, sprite_groups.bottom):
+        if  self.rect.bottom >= 550:
             sp.append(4)
         return sp
 
