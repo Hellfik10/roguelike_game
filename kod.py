@@ -1,11 +1,9 @@
 import sys
 import pygame
 import map
-from border import Border
 import creatures
 import sprite_groups
 import controls
-import bullets
 import door
 
 
@@ -37,6 +35,7 @@ while True:
     screen.blit(map.fon_get()[0], map.fon_get()[1])
     controls.update_bullets(sprite_groups.enemys, sprite_groups.players_bullets, width, height)
     controls.update_bullets(sprite_groups.player_group, sprite_groups.enemys_bullets, width, height, False)
+    player.update_moving()
     sprite_groups.players_bullets.draw(screen)
     sprite_groups.enemys_bullets.draw(screen)
     sprite_groups.enemys.draw(screen)

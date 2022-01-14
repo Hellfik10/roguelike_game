@@ -4,7 +4,7 @@ import bullets
 from load import load_image
 import sprite_groups
 
-v = 1
+v = 2
 
 
 class Player(pygame.sprite.Sprite):
@@ -17,6 +17,11 @@ class Player(pygame.sprite.Sprite):
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx
         self.rect.centery = self.screen_rect.centery
+        self.mright = False
+        self.mleft = False
+        self.mup = False
+        self.mdown = False
+        self.velocity = 5
 
     def player_pos(self, pos):
         self.rect.centerx = pos[0]
@@ -33,9 +38,19 @@ class Player(pygame.sprite.Sprite):
             sp.append(2)
         if self.rect.top <= 50:
             sp.append(3)
-        if  self.rect.bottom >= 550:
+        if self.rect.bottom >= 550:
             sp.append(4)
         return sp
+
+    def update_moving(self):
+        if self.mright:
+            self.rect.centerx += 5
+        if self.mleft:
+            self.rect.centerx -= 5
+        if self.mup:
+            self.rect.centery -= 5
+        if self.mdown:
+            self.rect.centery += 5
 
 
 class Enemy(pygame.sprite.Sprite):

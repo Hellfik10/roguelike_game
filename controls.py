@@ -13,37 +13,31 @@ def events(screen, player, enemys, p):
         if event.type == pygame.USEREVENT:
             for enemy in sprite_groups.enemys.copy():
                 enemy.shooting(player)
-                print(1)
 
         # Перемещение
-        if pygame.key.get_pressed()[pygame.K_d] and pygame.key.get_pressed()[pygame.K_w] and 2 not in p and 3 not in p:
-            player.rect.centerx += v ** 0.5
-            player.rect.centery -= v ** 0.5
-            player.side = 'right'
-        if pygame.key.get_pressed()[pygame.K_d] and pygame.key.get_pressed()[pygame.K_s] and 2 not in p and 4 not in p:
-            player.rect.centerx += v ** 0.5
-            player.rect.centery += v ** 0.5
-            player.side = 'right'
-        if pygame.key.get_pressed()[pygame.K_a] and pygame.key.get_pressed()[pygame.K_w] and 3 not in p and 1 not in p:
-            player.rect.centerx -= v ** 0.5
-            player.rect.centery -= v ** 0.5
-            player.side = 'left'
-        if pygame.key.get_pressed()[pygame.K_a] and pygame.key.get_pressed()[pygame.K_s] and 4 not in p and 1 not in p:
-            player.rect.centerx -= v ** 0.5
-            player.rect.centery += v ** 0.5
-            player.side = 'left'
-        if pygame.key.get_pressed()[pygame.K_d] and 2 not in p:
-            player.rect.centerx += v
-            player.side = 'right'
-        if pygame.key.get_pressed()[pygame.K_a] and 1 not in p:
-            player.rect.centerx -= v
-            player.side = 'left'
-        if pygame.key.get_pressed()[pygame.K_w] and 3 not in p:
-            player.rect.centery -= v
-            player.side = 'top'
-        if pygame.key.get_pressed()[pygame.K_s] and 4 not in p:
-            player.rect.centery += v
-            player.side = 'bottom'
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_d and 2 not in p:
+                player.mright = True
+                print(12)
+                player.side = 'right'
+            if event.key == pygame.K_a and 1 not in p:
+                player.mleft = True
+                player.side = 'left'
+            if event.key == pygame.K_w and 3 not in p:
+                player.mup = True
+                player.side = 'top'
+            if event.key == pygame.K_s and 4 not in p:
+                player.mdown = True
+                player.side = 'bottom'
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_d:
+                player.mright = False
+            if event.key == pygame.K_a:
+                player.mleft = False
+            if event.key == pygame.K_w:
+                player.mup = False
+            if event.key == pygame.K_s:
+                player.mdown = False
 
         # Атака
         if event.type == pygame.MOUSEBUTTONDOWN:
