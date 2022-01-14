@@ -43,6 +43,7 @@ def events(screen, player, enemys):
             if event.button == 1:
                 new_bullet = Player_bullet(screen, player, event.pos[0], event.pos[1])
                 sprite_groups.players_bullets.add(new_bullet)
+                player.player_shooting()
 
 
 def update_bullets(enemys, bullets, w, h, lives=True):

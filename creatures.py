@@ -28,7 +28,12 @@ class Player(pygame.sprite.Sprite):
                           load_image('vr3.png')]
         self.afk = [load_image('va2.png')]
         self.walkLeft = [load_image('vl1.png'), load_image('vl2.png'),
-                          load_image('vl3.png')]
+                         load_image('vl3.png')]
+        self.shooting = [load_image('players_slash\\vs1.png'), load_image('players_slash\\vs2.png'),
+                         load_image('players_slash\\vs3.png'), load_image('players_slash\\vs4.png'),
+                         load_image('players_slash\\vs5.png'), load_image('players_slash\\vs6.png'),
+                         load_image('players_slash\\vs7.png')]
+        self.timer_for_shooting = 0
         self.timer = 0
         self.timer1 = 0
 
@@ -61,26 +66,31 @@ class Player(pygame.sprite.Sprite):
         if self.mdown and 'block down' not in self.possibility_of_movement():
             self.rect.centery += 5
 
+    def player_shooting(self):
+        self.timer_for_shooting += 1
+        if self.timer_for_shooting == 5:
+            self.timer_for_shooting = 0
+            self.cur_frame = (self.cur_frame + 1) % len(self.shooting)
+            self.image = self.shooting[self.cur_frame]
+
     def update(self):
-        if self.mright and 'block right' not in self.possibility_of_movement():
-            self.timer += 1
-            if self.timer == 5:
-                self.timer = 0
-                self.cur_frame = (self.cur_frame + 1) % len(self.walkRight)
-                self.image = self.walkRight[self.cur_frame]
-        elif self.mleft and 'block left' not in self.possibility_of_movement():
-            self.timer += 1
-            if self.timer == 5:
-                self.timer = 0
-                self.cur_frame = (self.cur_frame + 1) % len(self.walkLeft)
-                self.image = self.walkLeft[self.cur_frame]
-        else:
-            self.timer1 = 0
-            self.cur_frame = (self.cur_frame + 1) % len(self.afk)
-            self.image = self.afk[self.cur_frame]
-
-
-
+        if self.timer_for_shooting == 0:
+            if self.mright and 'block right' not in self.possibility_of_movement():
+                self.timer += 1
+                if self.timer == 5:
+                    self.timer = 0
+                    self.cur_frame = (self.cur_frame + 1) % len(self.walkRight)
+                    self.image = self.walkRight[self.cur_frame]
+            elif self.mleft and 'block left' not in self.possibility_of_movement():
+                self.timer += 1
+                if self.timer == 5:
+                    self.timer = 0
+                    self.cur_frame = (self.cur_frame + 1) % len(self.walkLeft)
+                    self.image = self.walkLeft[self.cur_frame]
+            else:
+                self.timer1 = 0
+                self.cur_frame = (self.cur_frame + 1) % len(self.afk)
+                self.image = self.afk[self.cur_frame]
 
 
 class Enemy(pygame.sprite.Sprite):
