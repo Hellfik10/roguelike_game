@@ -6,7 +6,7 @@ import sprite_groups
 v = 5
 
 
-def events(screen, player, enemys, p):
+def events(screen, player, enemys):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -16,17 +16,16 @@ def events(screen, player, enemys, p):
 
         # Перемещение
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_d and 2 not in p:
+            if event.key == pygame.K_d:
                 player.mright = True
-                print(12)
                 player.side = 'right'
-            if event.key == pygame.K_a and 1 not in p:
+            if event.key == pygame.K_a:
                 player.mleft = True
                 player.side = 'left'
-            if event.key == pygame.K_w and 3 not in p:
+            if event.key == pygame.K_w:
                 player.mup = True
                 player.side = 'top'
-            if event.key == pygame.K_s and 4 not in p:
+            if event.key == pygame.K_s:
                 player.mdown = True
                 player.side = 'bottom'
         if event.type == pygame.KEYUP:
@@ -41,8 +40,9 @@ def events(screen, player, enemys, p):
 
         # Атака
         if event.type == pygame.MOUSEBUTTONDOWN:
-            new_bullet = Player_bullet(screen, player, event.pos[0], event.pos[1])
-            sprite_groups.players_bullets.add(new_bullet)
+            if event.button == 1:
+                new_bullet = Player_bullet(screen, player, event.pos[0], event.pos[1])
+                sprite_groups.players_bullets.add(new_bullet)
 
 
 def update_bullets(enemys, bullets, w, h, lives=True):

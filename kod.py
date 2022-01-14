@@ -29,7 +29,7 @@ sprite_groups.player_group.add(player)
 door = door.Door(screen)
 
 while True:
-    controls.events(screen, player, sprite_groups.enemys, player.update())
+    controls.events(screen, player, sprite_groups.enemys)
     controls.update_enemys(sprite_groups.enemys, player)
     sprite_groups.all_sprites.draw(screen)
     screen.blit(map.fon_get()[0], map.fon_get()[1])

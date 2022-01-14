@@ -30,26 +30,26 @@ class Player(pygame.sprite.Sprite):
     def output(self):
         self.screen.blit(self.image, self.rect)
 
-    def update(self):
+    def possibility_of_movement(self):
         sp = []
         if self.rect.left <= 50:
-            sp.append(1)
+            sp.append('block left')
         if self.rect.right >= 750:
-            sp.append(2)
+            sp.append('block right')
         if self.rect.top <= 50:
-            sp.append(3)
+            sp.append('block up')
         if self.rect.bottom >= 550:
-            sp.append(4)
+            sp.append('block down')
         return sp
 
     def update_moving(self):
-        if self.mright:
+        if self.mright and 'block right' not in self.possibility_of_movement():
             self.rect.centerx += 5
-        if self.mleft:
+        if self.mleft and 'block left' not in self.possibility_of_movement():
             self.rect.centerx -= 5
-        if self.mup:
+        if self.mup and 'block up' not in self.possibility_of_movement():
             self.rect.centery -= 5
-        if self.mdown:
+        if self.mdown and 'block down' not in self.possibility_of_movement():
             self.rect.centery += 5
 
 
@@ -91,4 +91,3 @@ class Enemy(pygame.sprite.Sprite):
                 self.rect.centerx - player.rect.centerx) ** 2) ** 0.5 > 125:
             new_bullet = bullets.Enemy_bullet(self.screen, self, player.rect.centerx, player.rect.centery)
             sprite_groups.enemys_bullets.add(new_bullet)
-            print(len((sprite_groups.enemys_bullets)))
