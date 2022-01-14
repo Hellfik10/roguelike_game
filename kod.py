@@ -42,6 +42,7 @@ while True:
     player.output()
     map.next_room(door.update(map.door_state_get(), map))
     door.output()
+    player.update()
 
     pygame.display.flip()
     clock.tick(FPS)

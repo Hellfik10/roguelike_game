@@ -11,8 +11,9 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, screen):
         super(Player, self).__init__()
         self.add(sprite_groups.all_sprites)
+        self.cur_frame = 0
         self.screen = screen
-        self.image = load_image('mario.png')
+        self.image = load_image('va2.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx
@@ -21,7 +22,15 @@ class Player(pygame.sprite.Sprite):
         self.mleft = False
         self.mup = False
         self.mdown = False
+        self.animCount = 0
         self.velocity = 5
+        self.walkRight = [load_image('vr1.png'), load_image('vr2.png'),
+                          load_image('vr3.png')]
+        self.afk = [load_image('va2.png')]
+        self.walkLeft = [load_image('vl1.png'), load_image('vl2.png'),
+                          load_image('vl3.png')]
+        self.timer = 0
+        self.timer1 = 0
 
     def player_pos(self, pos):
         self.rect.centerx = pos[0]
@@ -51,6 +60,30 @@ class Player(pygame.sprite.Sprite):
             self.rect.centery -= 5
         if self.mdown and 'block down' not in self.possibility_of_movement():
             self.rect.centery += 5
+
+    def update(self):
+        if self.mright and 'block right' not in self.possibility_of_movement():
+            self.timer += 1
+            if self.timer == 5:
+                self.timer = 0
+                self.cur_frame = (self.cur_frame + 1) % len(self.walkRight)
+                self.image = self.walkRight[self.cur_frame]
+        if self.mleft and 'block left' not in self.possibility_of_movement():
+            self.timer += 1
+            if self.timer == 5:
+                self.timer = 0
+                self.cur_frame = (self.cur_frame + 1) % len(self.walkLeft)
+                self.image = self.walkLeft[self.cur_frame]
+        if not (self.mright and 'block right' not in self.possibility_of_movement()) and \
+            not(self.mleft and 'block left' not in self.possibility_of_movement()) and \
+            not (self.mup and 'block up' not in self.possibility_of_movement()) and \
+            not (self.mdown and 'block down' not in self.possibility_of_movement()):
+            self.timer1 = 0
+            self.cur_frame = (self.cur_frame + 1) % len(self.afk)
+            self.image = self.afk[self.cur_frame]
+
+
+
 
 
 class Enemy(pygame.sprite.Sprite):
