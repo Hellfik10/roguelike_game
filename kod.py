@@ -33,6 +33,7 @@ while True:
     controls.update_enemys(sprite_groups.enemys, player)
     sprite_groups.all_sprites.draw(screen)
     screen.blit(map.fon_get()[0], map.fon_get()[1])
+    sprite_groups.bonus_group.draw(screen)
     controls.update_bullets(sprite_groups.enemys, sprite_groups.players_bullets, width, height)
     controls.update_bullets(sprite_groups.player_group, sprite_groups.enemys_bullets, width, height, False)
     player.update_moving()
@@ -43,6 +44,8 @@ while True:
     map.next_room(door.update(map.door_state_get(), map))
     door.output()
     player.update()
+    sprite_groups.bonus_group.update()
+
 
     pygame.display.flip()
     clock.tick(FPS)

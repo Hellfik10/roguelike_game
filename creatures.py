@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.mup = False
         self.mdown = False
         self.animCount = 0
-        self.velocity = 5
+        self.v = 5
         self.walkRight = [load_image('vr1.png'), load_image('vr2.png'),
                           load_image('vr3.png')]
         self.afk = [load_image('va2.png')]
@@ -58,13 +58,13 @@ class Player(pygame.sprite.Sprite):
 
     def update_moving(self):
         if self.mright and 'block right' not in self.possibility_of_movement():
-            self.rect.centerx += 5
+            self.rect.centerx += self.v
         if self.mleft and 'block left' not in self.possibility_of_movement():
-            self.rect.centerx -= 5
+            self.rect.centerx -= self.v
         if self.mup and 'block up' not in self.possibility_of_movement():
-            self.rect.centery -= 5
+            self.rect.centery -= self.v
         if self.mdown and 'block down' not in self.possibility_of_movement():
-            self.rect.centery += 5
+            self.rect.centery += self.v
 
     def update(self):
         if self.is_shooting:

@@ -2,11 +2,15 @@ from random import randint, sample
 from load import load_image
 import creatures
 import sprite_groups
+import items
 
 
 class Map:
     def __init__(self, width, height, screen):
         self.screen = screen
+
+        self.bonus = [items.HP, items.FastMove]
+        self.bonus_coords = [[300, 300], [500, 300]]
 
         self.rooms = []
         self.fon = None
@@ -37,7 +41,7 @@ class Map:
         for i in sprite_groups.player_group:
             i.player_pos((self.width // 2, self.height // 2))
 
-        for i in range(rooms_count):
+        for i in range(1):
             if 'prize room' not in self.rooms:
                 self.rooms.append('prize room')
             else:
@@ -49,7 +53,9 @@ class Map:
         room = sample(self.rooms, 1)[0]
         del self.rooms[self.rooms.index(room)]
         if room == 'prize room':
-            pass
+            bonus = sample(self.bonus, 2)
+            for i in range(len(bonus)):
+                sprite_groups.bonus_group.add(bonus[i](self.bonus_coords[i]))
         elif room == 'battle room':
             self.fon = self.fon_close_door
             self.door_state = False
@@ -70,7 +76,7 @@ class Map:
                     coords[1] = list(set(coords[1]) - set(block_coords[1]))
                 enemy_spawn_coords = [sample(coords[0], 1)[0], sample(coords[1], 1)[0]]
                 enemy_spawn_coords = (enemy_spawn_coords[0] + 75, enemy_spawn_coords[1] + 75)
-                new_enemy = creatures.Enemy(self.screen, enemy_spawn_coords, 1)
+                new_enemy = creatures.Enemy(self.screen, enemy_spawn_coords, randint(1, 2))
                 sprite_groups.enemys.add(new_enemy)
                 for x in range(enemy_spawn_coords[0] - 24, enemy_spawn_coords[0] + 24):
                     block_coords[0].append(x)
