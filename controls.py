@@ -6,7 +6,7 @@ import sprite_groups
 v = 5
 
 
-def events(screen, player, enemys):
+def events(screen, player):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -51,7 +51,18 @@ def update_bullets(enemys, bullets, w, h, lives=True):
     for bullet in bullets.copy():
         if bullet.rect.x < 50 or bullet.rect.right > w - 50 or bullet.rect.y < 50 or bullet.rect.bottom > h - 50:
             bullets.remove(bullet)
-    collisions = pygame.sprite.groupcollide(bullets, enemys, True, lives)
+    if enemys == sprite_groups.player_group:
+        collisions = pygame.sprite.groupcollide(bullets, enemys, True, False)
+        for player in enemys:
+            player.HP -= len(collisions)
+            if player.HP < 1:
+                sys.exit()
+    else:
+        for enemy in enemys:
+            collisions = pygame.sprite.spritecollide(enemy, bullets, True)
+            enemy.HP -= len(collisions)
+            if enemy.HP < 1:
+                enemy.kill()
 
 
 def update_enemys(enemys, player):

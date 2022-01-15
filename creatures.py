@@ -35,6 +35,7 @@ class Player(pygame.sprite.Sprite):
         self.timer_for_shooting = 0
         self.timer = 0
         self.timer1 = 0
+        self.HP = 100000
 
     def player_pos(self, pos):
         self.rect.centerx = pos[0]
@@ -94,7 +95,7 @@ class Player(pygame.sprite.Sprite):
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, screen, spawn):
+    def __init__(self, screen, spawn, HP):
         super(Enemy, self).__init__()
         self.screen = screen
         self.image = load_image('bad_mario.png')
@@ -102,6 +103,7 @@ class Enemy(pygame.sprite.Sprite):
         self.screen_rect = screen.get_rect()
         self.rect.centerx = spawn[0]
         self.rect.centery = spawn[1]
+        self.HP = HP
 
     def output(self):
         self.screen.blit(self.image, self.rect)

@@ -70,7 +70,7 @@ class Map:
                     coords[1] = list(set(coords[1]) - set(block_coords[1]))
                 enemy_spawn_coords = [sample(coords[0], 1)[0], sample(coords[1], 1)[0]]
                 enemy_spawn_coords = (enemy_spawn_coords[0] + 75, enemy_spawn_coords[1] + 75)
-                new_enemy = creatures.Enemy(self.screen, enemy_spawn_coords)
+                new_enemy = creatures.Enemy(self.screen, enemy_spawn_coords, 1)
                 sprite_groups.enemys.add(new_enemy)
                 for x in range(enemy_spawn_coords[0] - 24, enemy_spawn_coords[0] + 24):
                     block_coords[0].append(x)
