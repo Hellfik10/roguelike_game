@@ -3,7 +3,7 @@ from load import load_image
 
 
 class Player_bullet(pygame.sprite.Sprite):
-    def __init__(self, screen, creature, click_x, click_y):
+    def __init__(self, screen, creature, click_x, click_y, multiplier):
         super(Player_bullet, self).__init__()
         self.screen = screen
         self.image = load_image('bullet.png')
@@ -14,9 +14,10 @@ class Player_bullet(pygame.sprite.Sprite):
         self.rect.centery = creature.rect.centery
         self.vector = pygame.math.Vector2
         self.dir = pygame.math.Vector2(click_x - self.rect.centerx, click_y - self.rect.centery).normalize()
+        self.multiplier = multiplier
 
     def update(self):
-        self.pos += self.dir * 5
+        self.pos += self.dir * self.multiplier
         self.rect.center = round(self.pos.x), round(self.pos.y)
 
     def draw_bullet(self):

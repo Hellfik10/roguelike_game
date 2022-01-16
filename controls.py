@@ -41,7 +41,9 @@ def events(screen, player):
         # Атака
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                new_bullet = Player_bullet(screen, player, event.pos[0], event.pos[1])
+                for sprite in sprite_groups.player_group:
+                    multiplier = sprite.multiplier
+                new_bullet = Player_bullet(screen, player, event.pos[0], event.pos[1], multiplier)
                 sprite_groups.players_bullets.add(new_bullet)
                 player.is_shooting = True
 
@@ -57,6 +59,8 @@ def update_bullets(enemys, bullets, w, h, lives=True):
             player.HP -= len(collisions)
             if player.HP < 1:
                 sys.exit()
+    elif enemys == sprite_groups.environment_group:
+        pygame.sprite.groupcollide(enemys, bullets, True, True)
     else:
         for enemy in enemys:
             collisions = pygame.sprite.spritecollide(enemy, bullets, True)

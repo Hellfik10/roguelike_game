@@ -11,6 +11,7 @@ enemys_bullets = pygame.sprite.Group()
 door_group = pygame.sprite.Group()
 
 bonus_group = pygame.sprite.Group()
+environment_group = pygame.sprite.Group()
 
 
 

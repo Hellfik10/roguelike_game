@@ -30,12 +30,13 @@ class Player(pygame.sprite.Sprite):
         self.walkLeft = [load_image('vl1.png'), load_image('vl2.png'),
                          load_image('vl3.png')]
         self.shooting_sprites = [load_image('players_slash\\vs1.png'), load_image('players_slash\\vs3.png'),
-                         load_image('players_slash\\vs4.png'), load_image('players_slash\\vs5.png')]
+                                 load_image('players_slash\\vs4.png'), load_image('players_slash\\vs5.png')]
         self.is_shooting = False
         self.timer_for_shooting = 0
         self.timer = 0
         self.timer1 = 0
         self.HP = 100000
+        self.multiplier = 5
 
     def player_pos(self, pos):
         self.rect.centerx = pos[0]
@@ -59,12 +60,28 @@ class Player(pygame.sprite.Sprite):
     def update_moving(self):
         if self.mright and 'block right' not in self.possibility_of_movement():
             self.rect.centerx += self.v
+            if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                self.rect.centerx -= self.v
         if self.mleft and 'block left' not in self.possibility_of_movement():
             self.rect.centerx -= self.v
+            if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                self.rect.centerx += self.v
         if self.mup and 'block up' not in self.possibility_of_movement():
             self.rect.centery -= self.v
+            if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                self.rect.centery += self.v
         if self.mdown and 'block down' not in self.possibility_of_movement():
             self.rect.centery += self.v
+            if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                self.rect.centery -= self.v
+        if self.rect.left < 50:
+            self.rect.centerx = 50 + (self.rect.right - self.rect.left) // 2
+        if self.rect.top < 50:
+            self.rect.centery = 50 + (self.rect.bottom - self.rect.top) // 2
+        if self.rect.right > 750:
+            self.rect.centerx = 750 - (self.rect.right - self.rect.left) // 2
+        if self.rect.bottom > 550:
+            self.rect.centery = 550 - (self.rect.bottom - self.rect.top) // 2
 
     def update(self):
         if self.is_shooting:
@@ -101,8 +118,8 @@ class Enemy(pygame.sprite.Sprite):
         self.image = load_image('bad_mario.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
-        self.rect.centerx = spawn[0]
-        self.rect.centery = spawn[1]
+        self.rect.centerx = spawn[0] + 50 + (self.rect.right - self.rect.left) // 2
+        self.rect.centery = spawn[1] + 50 + (self.rect.bottom - self.rect.top) // 2
         self.HP = HP
 
     def output(self):
@@ -112,21 +129,37 @@ class Enemy(pygame.sprite.Sprite):
         if hunting:
             if self.rect.centerx < player.rect.centerx:
                 self.rect.centerx += v
+                if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                    self.rect.centerx -= v
             else:
                 self.rect.centerx -= v
+                if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                    self.rect.centerx += v
             if self.rect.centery < player.rect.centery:
                 self.rect.centery += v
+                if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                    self.rect.centery -= v
             else:
                 self.rect.centery -= v
+                if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                    self.rect.centery += v
         else:
             if 75 < self.rect.centerx < player.rect.centerx:
                 self.rect.centerx -= v
+                if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                    self.rect.centerx += v
             elif 730 > self.rect.centerx > player.rect.centerx:
                 self.rect.centerx += v
+                if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                    self.rect.centerx -= v
             if 75 < self.rect.centery < player.rect.centery:
                 self.rect.centery -= v
+                if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                    self.rect.centery += v
             elif 530 > self.rect.centery > player.rect.centery:
                 self.rect.centery += v
+                if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
+                    self.rect.centery -= v
 
     def shooting(self, player):
         if ((self.rect.centery - player.rect.centery) ** 2 + (
