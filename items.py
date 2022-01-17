@@ -50,3 +50,18 @@ class FastMoveBulletsPlayer(pygame.sprite.Sprite):
                 if sprite.multiplier != 30:
                     sprite.multiplier += 1
             sprite_groups.bonus_group.empty()
+
+
+class MoreStrongerBulletsPlayer(pygame.sprite.Sprite):
+    def __init__(self, coords):
+        super(MoreStrongerBulletsPlayer, self).__init__()
+        self.image = load_image('door.jpeg')
+        self.rect = self.image.get_rect()
+        self.rect.centerx = coords[0]
+        self.rect.centery = coords[1]
+
+    def update(self):
+        if pygame.sprite.spritecollideany(self, sprite_groups.player_group):
+            for sprite in sprite_groups.player_group:
+                sprite.damage += 1
+            sprite_groups.bonus_group.empty()

@@ -37,6 +37,7 @@ class Player(pygame.sprite.Sprite):
         self.timer1 = 0
         self.HP = 100000
         self.multiplier = 5
+        self.damage = 1
 
     def player_pos(self, pos):
         self.rect.centerx = pos[0]
@@ -112,7 +113,7 @@ class Player(pygame.sprite.Sprite):
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, screen, spawn, HP):
+    def __init__(self, screen, spawn, HP, extra_hp, extra_speed_bullets):
         super(Enemy, self).__init__()
         self.screen = screen
         self.image = load_image('bad_mario.png')
@@ -120,7 +121,8 @@ class Enemy(pygame.sprite.Sprite):
         self.screen_rect = screen.get_rect()
         self.rect.centerx = spawn[0] + 50 + (self.rect.right - self.rect.left) // 2
         self.rect.centery = spawn[1] + 50 + (self.rect.bottom - self.rect.top) // 2
-        self.HP = HP
+        self.HP = HP + extra_hp
+        self.multiplier = 4 + extra_speed_bullets
 
     def output(self):
         self.screen.blit(self.image, self.rect)
@@ -164,5 +166,6 @@ class Enemy(pygame.sprite.Sprite):
     def shooting(self, player):
         if ((self.rect.centery - player.rect.centery) ** 2 + (
                 self.rect.centerx - player.rect.centerx) ** 2) ** 0.5 > 125:
-            new_bullet = bullets.Enemy_bullet(self.screen, self, player.rect.centerx, player.rect.centery)
+            new_bullet = bullets.Enemy_bullet(self.screen, self, player.rect.centerx, player.rect.centery,
+                                              self.multiplier)
             sprite_groups.enemys_bullets.add(new_bullet)
