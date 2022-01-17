@@ -51,7 +51,7 @@ class Player(pygame.sprite.Sprite):
         self.timer_for_shooting = 0
         self.timer = 0
         self.timer1 = 0
-        self.HP = 100000
+        self.HP = 100
         self.multiplier = 5
         self.ammos = 5
         self.max_ammos = 5

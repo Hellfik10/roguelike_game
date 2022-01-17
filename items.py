@@ -10,7 +10,7 @@ from load import load_image
 class HP(pygame.sprite.Sprite):
     def __init__(self, coords):
         super(HP, self).__init__()
-        self.image = pygame.transform.scale(load_image('door.png'), (50, 50))
+        self.image = pygame.transform.scale(load_image('prizehe.png'), (50,50))
         self.rect = self.image.get_rect()
         self.rect.centerx = coords[0]
         self.rect.centery = coords[1]
@@ -26,7 +26,7 @@ class HP(pygame.sprite.Sprite):
 class FastMovePlayer(pygame.sprite.Sprite):
     def __init__(self, coords):
         super(FastMovePlayer, self).__init__()
-        self.image = pygame.transform.scale(load_image('door.png'), (50, 50))
+        self.image = pygame.transform.scale(load_image('prizesapog.png'), (50,50))
         self.rect = self.image.get_rect()
         self.rect.centerx = coords[0]
         self.rect.centery = coords[1]
@@ -42,7 +42,7 @@ class FastMovePlayer(pygame.sprite.Sprite):
 class FastMoveBulletsPlayer(pygame.sprite.Sprite):
     def __init__(self, coords):
         super(FastMoveBulletsPlayer, self).__init__()
-        self.image = pygame.transform.scale(load_image('door.png'), (50, 50))
+        self.image = pygame.transform.scale(load_image('prizespeed.png'), (50,50))
         self.rect = self.image.get_rect()
         self.rect.centerx = coords[0]
         self.rect.centery = coords[1]
@@ -58,7 +58,7 @@ class FastMoveBulletsPlayer(pygame.sprite.Sprite):
 class MoreStrongerBulletsPlayer(pygame.sprite.Sprite):
     def __init__(self, coords):
         super(MoreStrongerBulletsPlayer, self).__init__()
-        self.image = load_image('door.png')
+        self.image = pygame.transform.scale(load_image('prizestr.png'), (50,50))
         self.rect = self.image.get_rect()
         self.rect.centerx = coords[0]
         self.rect.centery = coords[1]
