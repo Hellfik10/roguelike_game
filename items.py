@@ -4,10 +4,13 @@ import sprite_groups
 from load import load_image
 
 
+# Улучшения для игрока (дополнительная жизнь, ускорение перемещения, усиление и ускорение пули игрока)
+
+
 class HP(pygame.sprite.Sprite):
     def __init__(self, coords):
         super(HP, self).__init__()
-        self.image = pygame.transform.scale(load_image('door.png'), (50,50))
+        self.image = pygame.transform.scale(load_image('door.png'), (50, 50))
         self.rect = self.image.get_rect()
         self.rect.centerx = coords[0]
         self.rect.centery = coords[1]
@@ -23,7 +26,7 @@ class HP(pygame.sprite.Sprite):
 class FastMovePlayer(pygame.sprite.Sprite):
     def __init__(self, coords):
         super(FastMovePlayer, self).__init__()
-        self.image = pygame.transform.scale(load_image('door.png'), (50,50))
+        self.image = pygame.transform.scale(load_image('door.png'), (50, 50))
         self.rect = self.image.get_rect()
         self.rect.centerx = coords[0]
         self.rect.centery = coords[1]
@@ -39,7 +42,7 @@ class FastMovePlayer(pygame.sprite.Sprite):
 class FastMoveBulletsPlayer(pygame.sprite.Sprite):
     def __init__(self, coords):
         super(FastMoveBulletsPlayer, self).__init__()
-        self.image = pygame.transform.scale(load_image('door.png'), (50,50))
+        self.image = pygame.transform.scale(load_image('door.png'), (50, 50))
         self.rect = self.image.get_rect()
         self.rect.centerx = coords[0]
         self.rect.centery = coords[1]

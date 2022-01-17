@@ -14,7 +14,7 @@ def events(screen, player):
             for enemy in sprite_groups.enemys.copy():
                 enemy.shooting(player)
 
-        # Перемещение
+        # Перемещение игрока
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_d:
                 player.mright = True
@@ -54,6 +54,7 @@ def events(screen, player):
 
 
 def update_bullets(enemys, bullets, w, h, lives=True):
+    # Обновление пуль
     bullets.update()
     for bullet in bullets.copy():
         if bullet.rect.x < 50 or bullet.rect.right > w - 50 or bullet.rect.y < 50 or bullet.rect.bottom > h - 50:
@@ -78,6 +79,7 @@ def update_bullets(enemys, bullets, w, h, lives=True):
 
 
 def update_enemys(enemys, player):
+    #Перемещениие врагов
     for enemy in enemys.copy():
         if abs(enemy.rect.centerx - player.rect.centerx) < 250 and abs(enemy.rect.centery - player.rect.centery) < 200:
             enemy.moving_away(player, False)

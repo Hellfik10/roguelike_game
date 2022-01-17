@@ -74,7 +74,7 @@ class Map:
 
             enemy_count = randint(4, 6)
 
-            box_count = randint(1, 3)
+            box_count = randint(4, 6)
 
             coords = self.coords.copy()
 
@@ -90,7 +90,6 @@ class Map:
                     coords[1] = list(set(coords[1]) - set(block_coords[1]))
                 else:
                     coords[0] = list(set(coords[0]) - set(block_coords[0]))
-                print(coords)
                 box_spawn_coords = [sample(coords[0], 1)[0], sample(coords[1], 1)[0]]
                 box = environment.Box(box_spawn_coords)
                 sprite_groups.environment_group.add(box)
@@ -113,12 +112,8 @@ class Map:
                 new_enemy = creatures.Enemy(self.screen, enemy_spawn_coords, randint(1, 2),
                                             self.extra_hp, self.extra_speed_bullets)
                 sprite_groups.enemys.add(new_enemy)
-                for x in range(enemy_spawn_coords[0] - (new_enemy.rect.right - new_enemy.rect.left),
-                               enemy_spawn_coords[0] + (new_enemy.rect.right - new_enemy.rect.left)):
-                    block_coords[0].append(x)
-                for y in range(enemy_spawn_coords[1] - (new_enemy.rect.bottom - new_enemy.rect.top),
-                               enemy_spawn_coords[1] + (new_enemy.rect.bottom - new_enemy.rect.top)):
-                    block_coords[1].append(y)
+                block_coords[0].append(enemy_spawn_coords[0])
+                block_coords[1].append(enemy_spawn_coords[1])
 
     def next_room(self, p):
         if p:

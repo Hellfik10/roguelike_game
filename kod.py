@@ -41,8 +41,10 @@ while True:
     sprite_groups.bonus_group.draw(screen)
     sprite_groups.environment_group.draw(screen)
     screen.blit(load_image('door.png'), (0, 0))
-    screen.blit(i.output(player.HP, map.lvl, map.room)[0], (50, 0))
-    screen.blit(i.output(player.HP, map.lvl, map.room)[1], (i.output(player.HP, map.lvl, map.room)[2], 0))
+    screen.blit(i.output(player.HP, map.lvl, map.room, player.ammos)[0], (50, 0))
+    screen.blit(i.output(player.HP, map.lvl, map.room, player.ammos)[1],
+                (i.output(player.HP, map.lvl, map.room, player.ammos)[2], 0))
+    screen.blit(i.output(player.HP, map.lvl, map.room, player.ammos)[3], (750, 550))
     controls.update_bullets(sprite_groups.enemys, sprite_groups.players_bullets, width, height)
     controls.update_bullets(sprite_groups.player_group, sprite_groups.enemys_bullets, width, height, False)
     controls.update_bullets(sprite_groups.environment_group, sprite_groups.players_bullets, width, height)

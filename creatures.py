@@ -65,6 +65,7 @@ class Player(pygame.sprite.Sprite):
         self.screen.blit(self.image, self.rect)
 
     def possibility_of_movement(self):
+        # Проверка, может ли игрок переместиться
         sp = []
         if self.rect.left <= 50:
             sp.append('block left')
@@ -77,6 +78,7 @@ class Player(pygame.sprite.Sprite):
         return sp
 
     def update_moving(self):
+        # Перемещение игрока
         if self.mright and 'block right' not in self.possibility_of_movement():
             self.rect.centerx += self.v
             if pygame.sprite.spritecollideany(self, sprite_groups.environment_group):
@@ -189,6 +191,7 @@ class Enemy(pygame.sprite.Sprite):
                       pygame.transform.scale(load_image('el4.png'), (72, 64))]
 
     def update(self):
+        # Анимация
         self.timer += 1
         if self.timer == 10:
             self.timer = 0
@@ -196,6 +199,7 @@ class Enemy(pygame.sprite.Sprite):
             self.image = self.anime[self.cur_frame]
 
     def moving_away(self, player, hunting):
+        # Принцип перемещения врагов
         if hunting:
             if self.rect.centerx < player.rect.centerx:
                 self.rect.centerx += v
@@ -232,6 +236,7 @@ class Enemy(pygame.sprite.Sprite):
                     self.rect.centery -= v
 
     def shooting(self, player):
+        # Стрельба врагов
         if ((self.rect.centery - player.rect.centery) ** 2 + (
                 self.rect.centerx - player.rect.centerx) ** 2) ** 0.5 > 200:
             new_bullet = bullets.Enemy_bullet(self.screen, self, player.rect.centerx, player.rect.centery,
