@@ -73,38 +73,43 @@ class Map:
 
             for box in range(box_count):
                 x_or_y_answer = sample(x_or_y, 1)[0]
-                if x_or_y_answer == 'x':
+                if x_or_y_answer == 'x' and len(list(set(coords[0]) - set(block_coords[0]))) != 0:
                     coords[0] = list(set(coords[0]) - set(block_coords[0]))
-                else:
+                elif x_or_y_answer == 'y' and len(list(set(coords[1]) - set(block_coords[1]))) != 0:
                     coords[1] = list(set(coords[1]) - set(block_coords[1]))
+                else:
+                    coords[0] = list(set(coords[0]) - set(block_coords[0]))
                 box_spawn_coords = [sample(coords[0], 1)[0], sample(coords[1], 1)[0]]
                 box = environment.Box(box_spawn_coords)
                 sprite_groups.environment_group.add(box)
-                for x in range(box_spawn_coords[0] - (box.rect.right - box.rect.left) // 2,
-                               box_spawn_coords[0] + (box.rect.right - box.rect.left) // 2):
+                for x in range(box_spawn_coords[0] - (box.rect.right - box.rect.left),
+                               box_spawn_coords[0] + (box.rect.right - box.rect.left)):
                     block_coords[0].append(x)
-                for y in range(box_spawn_coords[1] - (box.rect.bottom - box.rect.top) // 2,
-                               box_spawn_coords[1] + (box.rect.bottom - box.rect.top) // 2):
+                for y in range(box_spawn_coords[1] - (box.rect.bottom - box.rect.top),
+                               box_spawn_coords[1] + (box.rect.bottom - box.rect.top)):
                     block_coords[1].append(y)
 
             for enemy_spawn in range(enemy_count):
                 x_or_y_answer = sample(x_or_y, 1)[0]
-                if x_or_y_answer == 'x':
+                if x_or_y_answer == 'x' and len(list(set(coords[0]) - set(block_coords[0]))) != 0:
                     coords[0] = list(set(coords[0]) - set(block_coords[0]))
-                else:
+                elif x_or_y_answer == 'y' and len(list(set(coords[1]) - set(block_coords[1]))) != 0:
                     coords[1] = list(set(coords[1]) - set(block_coords[1]))
+                else:
+                    coords[0] = list(set(coords[0]) - set(block_coords[0]))
                 enemy_spawn_coords = [sample(coords[0], 1)[0], sample(coords[1], 1)[0]]
                 new_enemy = creatures.Enemy(self.screen, enemy_spawn_coords, randint(1, 2))
                 sprite_groups.enemys.add(new_enemy)
-                for x in range(enemy_spawn_coords[0] - (new_enemy.rect.right - new_enemy.rect.left) // 2,
-                               enemy_spawn_coords[0] + (new_enemy.rect.right - new_enemy.rect.left) // 2):
+                for x in range(enemy_spawn_coords[0] - (new_enemy.rect.right - new_enemy.rect.left),
+                               enemy_spawn_coords[0] + (new_enemy.rect.right - new_enemy.rect.left)):
                     block_coords[0].append(x)
-                for y in range(enemy_spawn_coords[1] - (new_enemy.rect.bottom - new_enemy.rect.top) // 2,
-                               enemy_spawn_coords[1] + (new_enemy.rect.bottom - new_enemy.rect.top) // 2):
+                for y in range(enemy_spawn_coords[1] - (new_enemy.rect.bottom - new_enemy.rect.top),
+                               enemy_spawn_coords[1] + (new_enemy.rect.bottom - new_enemy.rect.top)):
                     block_coords[1].append(y)
 
     def next_room(self, p):
         if p:
+            sprite_groups.environment_group.empty()
             if len(self.rooms) == 0:
                 self.new_level()
             else:
