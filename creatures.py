@@ -37,6 +37,8 @@ class Player(pygame.sprite.Sprite):
         self.timer1 = 0
         self.HP = 100000
         self.multiplier = 5
+        self.ammos = 5
+        self.max_ammos = 5
 
     def player_pos(self, pos):
         self.rect.centerx = pos[0]

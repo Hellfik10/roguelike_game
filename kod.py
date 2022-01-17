@@ -27,6 +27,7 @@ player = creatures.Player(screen)
 sprite_groups.player_group.add(player)
 
 door = door.Door(screen)
+timer_for_ammos = 0
 
 while True:
     controls.events(screen, player)
@@ -48,7 +49,10 @@ while True:
     door.output()
     player.update()
     sprite_groups.bonus_group.update()
-
-
+    if player.ammos == 0:
+        timer_for_ammos += 1
+        if timer_for_ammos == 100:
+            timer_for_ammos = 0
+            player.ammos += player.max_ammos
     pygame.display.flip()
     clock.tick(FPS)

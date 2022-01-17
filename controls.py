@@ -28,6 +28,8 @@ def events(screen, player):
             if event.key == pygame.K_s:
                 player.mdown = True
                 player.side = 'bottom'
+            if event.key == pygame.K_r:
+                player.ammos = 0
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
                 player.mright = False
@@ -41,11 +43,13 @@ def events(screen, player):
         # Атака
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                for sprite in sprite_groups.player_group:
-                    multiplier = sprite.multiplier
-                new_bullet = Player_bullet(screen, player, event.pos[0], event.pos[1], multiplier)
-                sprite_groups.players_bullets.add(new_bullet)
-                player.is_shooting = True
+                if player.ammos > 0:
+                    for sprite in sprite_groups.player_group:
+                        multiplier = sprite.multiplier
+                    new_bullet = Player_bullet(screen, player, event.pos[0], event.pos[1], multiplier)
+                    sprite_groups.players_bullets.add(new_bullet)
+                    player.is_shooting = True
+                    player.ammos -= 1
 
 
 def update_bullets(enemys, bullets, w, h, lives=True):
