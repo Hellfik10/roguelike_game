@@ -56,7 +56,6 @@ while True:
     sprite_groups.enemys.draw(screen)
     player.output()
     map.next_room(door.update(map.door_state_get(), map))
-    door.output()
     player.update()
     sprite_groups.bonus_group.update()
     if player.ammos == 0:
