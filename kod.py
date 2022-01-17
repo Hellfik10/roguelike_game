@@ -5,6 +5,8 @@ import creatures
 import sprite_groups
 import controls
 import door
+from interface import Interface
+from load import load_image
 
 
 def terminate():
@@ -29,6 +31,8 @@ sprite_groups.player_group.add(player)
 door = door.Door(screen)
 timer_for_ammos = 0
 
+i = Interface()
+
 while True:
     controls.events(screen, player)
     controls.update_enemys(sprite_groups.enemys, player)
@@ -36,6 +40,9 @@ while True:
     screen.blit(map.fon_get()[0], map.fon_get()[1])
     sprite_groups.bonus_group.draw(screen)
     sprite_groups.environment_group.draw(screen)
+    screen.blit(load_image('door.jpeg'), (0, 0))
+    screen.blit(i.output(player.HP, map.lvl, map.room)[0], (50, 0))
+    screen.blit(i.output(player.HP, map.lvl, map.room)[1], (i.output(player.HP, map.lvl, map.room)[2], 0))
     controls.update_bullets(sprite_groups.enemys, sprite_groups.players_bullets, width, height)
     controls.update_bullets(sprite_groups.player_group, sprite_groups.enemys_bullets, width, height, False)
     controls.update_bullets(sprite_groups.environment_group, sprite_groups.players_bullets, width, height)
@@ -54,5 +61,6 @@ while True:
         if timer_for_ammos == 100:
             timer_for_ammos = 0
             player.ammos += player.max_ammos
+
     pygame.display.flip()
     clock.tick(FPS)

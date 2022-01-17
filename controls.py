@@ -66,9 +66,12 @@ def update_bullets(enemys, bullets, w, h, lives=True):
     elif enemys == sprite_groups.environment_group:
         pygame.sprite.groupcollide(enemys, bullets, True, True)
     else:
+        for sprite in sprite_groups.player_group:
+            damage = sprite.damage
+            break
         for enemy in enemys:
             collisions = pygame.sprite.spritecollide(enemy, bullets, True)
-            enemy.HP -= len(collisions)
+            enemy.HP -= len(collisions) * damage
             if enemy.HP < 1:
                 enemy.kill()
 

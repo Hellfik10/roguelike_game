@@ -10,22 +10,31 @@ class Map:
     def __init__(self, width, height, screen):
         self.screen = screen
 
-        self.bonus = [items.HP, items.FastMovePlayer, items.FastMoveBulletsPlayer]
+        self.bonus = [items.HP, items.FastMovePlayer, items.FastMoveBulletsPlayer, items.MoreStrongerBulletsPlayer]
         self.bonus_coords = [[300, 300], [500, 300]]
 
         self.rooms = []
         self.fon = None
         self.door_state = True
 
+        self.lvl = 0
+        self.room = 0
+
+        self.extra_hp = 0
+        self.extra_speed_bullets = 0
+
         self.coords = [[], []]
 
-        enemy = creatures.Enemy(self.screen, [0, 0], randint(1, 2))
+        enemy = creatures.Enemy(self.screen, [0, 0], randint(1, 2), self.extra_hp, self.extra_speed_bullets)
 
         for x in range(0 + (enemy.rect.right - enemy.rect.left) // 2, 650 - (enemy.rect.right - enemy.rect.left) // 2):
-            self.coords[0].append(x)
+            if x < 295 + (enemy.rect.right - enemy.rect.left) // 2 or\
+                    x > 355 + (enemy.rect.right - enemy.rect.left) // 2:
+                self.coords[0].append(x)
 
         for y in range(0 + (enemy.rect.bottom - enemy.rect.top) // 2, 450 - (enemy.rect.bottom - enemy.rect.top) // 2):
-            self.coords[1].append(y)
+            if y < 380 - (enemy.rect.right - enemy.rect.left) // 2:
+                self.coords[1].append(y)
 
         self.width = width
         self.height = height
@@ -40,6 +49,8 @@ class Map:
         self.rooms = []
         self.fon = self.fon_open_door
         self.door_state = True
+        self.lvl += 1
+        self.room = 0
 
         for i in sprite_groups.player_group:
             i.player_pos((self.width // 2, self.height // 2))
@@ -73,43 +84,54 @@ class Map:
 
             for box in range(box_count):
                 x_or_y_answer = sample(x_or_y, 1)[0]
-                if x_or_y_answer == 'x':
+                if x_or_y_answer == 'x' and len(list(set(coords[0]) - set(block_coords[0]))) != 0:
                     coords[0] = list(set(coords[0]) - set(block_coords[0]))
-                else:
+                elif x_or_y_answer == 'y' and len(list(set(coords[1]) - set(block_coords[1]))) != 0:
                     coords[1] = list(set(coords[1]) - set(block_coords[1]))
+                else:
+                    coords[0] = list(set(coords[0]) - set(block_coords[0]))
                 box_spawn_coords = [sample(coords[0], 1)[0], sample(coords[1], 1)[0]]
                 box = environment.Box(box_spawn_coords)
                 sprite_groups.environment_group.add(box)
-                for x in range(box_spawn_coords[0] - (box.rect.right - box.rect.left) // 2,
-                               box_spawn_coords[0] + (box.rect.right - box.rect.left) // 2):
+                for x in range(box_spawn_coords[0] - (box.rect.right - box.rect.left),
+                               box_spawn_coords[0] + (box.rect.right - box.rect.left)):
                     block_coords[0].append(x)
-                for y in range(box_spawn_coords[1] - (box.rect.bottom - box.rect.top) // 2,
-                               box_spawn_coords[1] + (box.rect.bottom - box.rect.top) // 2):
+                for y in range(box_spawn_coords[1] - (box.rect.bottom - box.rect.top),
+                               box_spawn_coords[1] + (box.rect.bottom - box.rect.top)):
                     block_coords[1].append(y)
 
             for enemy_spawn in range(enemy_count):
                 x_or_y_answer = sample(x_or_y, 1)[0]
-                if x_or_y_answer == 'x':
+                if x_or_y_answer == 'x' and len(list(set(coords[0]) - set(block_coords[0]))) != 0:
                     coords[0] = list(set(coords[0]) - set(block_coords[0]))
-                else:
+                elif x_or_y_answer == 'y' and len(list(set(coords[1]) - set(block_coords[1]))) != 0:
                     coords[1] = list(set(coords[1]) - set(block_coords[1]))
+                else:
+                    coords[0] = list(set(coords[0]) - set(block_coords[0]))
                 enemy_spawn_coords = [sample(coords[0], 1)[0], sample(coords[1], 1)[0]]
-                new_enemy = creatures.Enemy(self.screen, enemy_spawn_coords, randint(1, 2))
+                new_enemy = creatures.Enemy(self.screen, enemy_spawn_coords, randint(1, 2),
+                                            self.extra_hp, self.extra_speed_bullets)
                 sprite_groups.enemys.add(new_enemy)
-                for x in range(enemy_spawn_coords[0] - (new_enemy.rect.right - new_enemy.rect.left) // 2,
-                               enemy_spawn_coords[0] + (new_enemy.rect.right - new_enemy.rect.left) // 2):
+                for x in range(enemy_spawn_coords[0] - (new_enemy.rect.right - new_enemy.rect.left),
+                               enemy_spawn_coords[0] + (new_enemy.rect.right - new_enemy.rect.left)):
                     block_coords[0].append(x)
-                for y in range(enemy_spawn_coords[1] - (new_enemy.rect.bottom - new_enemy.rect.top) // 2,
-                               enemy_spawn_coords[1] + (new_enemy.rect.bottom - new_enemy.rect.top) // 2):
+                for y in range(enemy_spawn_coords[1] - (new_enemy.rect.bottom - new_enemy.rect.top),
+                               enemy_spawn_coords[1] + (new_enemy.rect.bottom - new_enemy.rect.top)):
                     block_coords[1].append(y)
 
     def next_room(self, p):
         if p:
+            sprite_groups.environment_group.empty()
+            sprite_groups.bonus_group.empty()
             if len(self.rooms) == 0:
                 self.new_level()
+                self.extra_hp += 1
+                if self.extra_speed_bullets != 10:
+                    self.extra_speed_bullets += 1
             else:
                 for i in sprite_groups.player_group:
                     i.player_pos((400, 525))
+                self.room += 1
 
             self.generate_room()
 
