@@ -79,7 +79,7 @@ def update_bullets(enemys, bullets, w, h, lives=True):
 
 def update_enemys(enemys, player):
     for enemy in enemys.copy():
-        if abs(enemy.rect.centerx - player.rect.centerx) < 200 and abs(enemy.rect.centery - player.rect.centery) < 170:
+        if abs(enemy.rect.centerx - player.rect.centerx) < 250 and abs(enemy.rect.centery - player.rect.centery) < 200:
             enemy.moving_away(player, False)
         else:
             enemy.moving_away(player, True)

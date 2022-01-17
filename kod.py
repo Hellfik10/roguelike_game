@@ -40,7 +40,7 @@ while True:
     screen.blit(map.fon_get()[0], map.fon_get()[1])
     sprite_groups.bonus_group.draw(screen)
     sprite_groups.environment_group.draw(screen)
-    screen.blit(load_image('door.jpeg'), (0, 0))
+    screen.blit(load_image('door.png'), (0, 0))
     screen.blit(i.output(player.HP, map.lvl, map.room)[0], (50, 0))
     screen.blit(i.output(player.HP, map.lvl, map.room)[1], (i.output(player.HP, map.lvl, map.room)[2], 0))
     controls.update_bullets(sprite_groups.enemys, sprite_groups.players_bullets, width, height)

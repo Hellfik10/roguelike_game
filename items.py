@@ -55,7 +55,7 @@ class FastMoveBulletsPlayer(pygame.sprite.Sprite):
 class MoreStrongerBulletsPlayer(pygame.sprite.Sprite):
     def __init__(self, coords):
         super(MoreStrongerBulletsPlayer, self).__init__()
-        self.image = load_image('door.jpeg')
+        self.image = load_image('door.png')
         self.rect = self.image.get_rect()
         self.rect.centerx = coords[0]
         self.rect.centery = coords[1]

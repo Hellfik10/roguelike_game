@@ -90,6 +90,7 @@ class Map:
                     coords[1] = list(set(coords[1]) - set(block_coords[1]))
                 else:
                     coords[0] = list(set(coords[0]) - set(block_coords[0]))
+                print(coords)
                 box_spawn_coords = [sample(coords[0], 1)[0], sample(coords[1], 1)[0]]
                 box = environment.Box(box_spawn_coords)
                 sprite_groups.environment_group.add(box)

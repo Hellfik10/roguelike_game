@@ -233,7 +233,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def shooting(self, player):
         if ((self.rect.centery - player.rect.centery) ** 2 + (
-                self.rect.centerx - player.rect.centerx) ** 2) ** 0.5 > 125:
+                self.rect.centerx - player.rect.centerx) ** 2) ** 0.5 > 200:
             new_bullet = bullets.Enemy_bullet(self.screen, self, player.rect.centerx, player.rect.centery,
                                               self.multiplier)
             sprite_groups.enemys_bullets.add(new_bullet)
