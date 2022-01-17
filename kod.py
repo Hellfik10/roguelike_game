@@ -17,7 +17,7 @@ screen = pygame.display.set_mode(size)
 
 pygame.display.set_caption('roguelike_game')
 
-FPS = 60
+FPS = 50
 clock = pygame.time.Clock()
 pygame.time.set_timer(pygame.USEREVENT, 3000)
 
