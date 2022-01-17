@@ -39,8 +39,8 @@ class Map:
         self.width = width
         self.height = height
 
-        self.fon_close_door = load_image('fon_close_door.jpeg')
-        self.fon_open_door = load_image('fon_open_door.jpeg')
+        self.fon_close_door = load_image('fon_close_door.png')
+        self.fon_open_door = load_image('fon_open_door.png')
 
         self.new_level()
 

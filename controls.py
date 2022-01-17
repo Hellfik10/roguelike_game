@@ -19,9 +19,11 @@ def events(screen, player):
             if event.key == pygame.K_d:
                 player.mright = True
                 player.side = 'right'
+                player.knopka = True
             if event.key == pygame.K_a:
                 player.mleft = True
                 player.side = 'left'
+                player.knopka = False
             if event.key == pygame.K_w:
                 player.mup = True
                 player.side = 'top'
@@ -39,7 +41,6 @@ def events(screen, player):
                 player.mup = False
             if event.key == pygame.K_s:
                 player.mdown = False
-
         # Атака
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:

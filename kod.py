@@ -50,6 +50,7 @@ while True:
     player.update_moving()
     sprite_groups.players_bullets.draw(screen)
     sprite_groups.enemys_bullets.draw(screen)
+    sprite_groups.enemys.update()
     sprite_groups.enemys.draw(screen)
     player.output()
     map.next_room(door.update(map.door_state_get(), map))
