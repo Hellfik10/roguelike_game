@@ -51,10 +51,10 @@ class Player(pygame.sprite.Sprite):
         self.timer_for_shooting = 0
         self.timer = 0
         self.timer1 = 0
-        self.HP = 100
+        self.HP = 5
         self.multiplier = 5
-        self.ammos = 5
-        self.max_ammos = 5
+        self.ammos = 8
+        self.max_ammos = 8
         self.damage = 1
 
     def player_pos(self, pos):
