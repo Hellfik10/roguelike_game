@@ -124,40 +124,61 @@ class Map:
 
             # выбор координат для коробок без их пересечения
 
+            box_spawn_coords = [0, 0]
+
+            enemy_for_coords = creatures.Enemy(self.screen, [0, 0], randint(1, 2),
+                                            self.extra_hp, self.extra_speed_bullets)
+
             for box in range(box_count):
-                x_or_y_answer = sample(x_or_y, 1)[0]
-                if x_or_y_answer == 'x' and len(list(set(coords[0]) - set(block_coords[0]))) != 0:
-                    coords[0] = list(set(coords[0]) - set(block_coords[0]))
-                elif x_or_y_answer == 'y' and len(list(set(coords[1]) - set(block_coords[1]))) != 0:
-                    coords[1] = list(set(coords[1]) - set(block_coords[1]))
+                x_or_y_answer = sample(x_or_y, 1)
+                if x_or_y_answer == 'x':
+                    if len(coords[0]) != 0:
+                        box_spawn_coords = [sample(coords[0], 1)[0], sample(self.coords[1], 1)[0]]
+                    else:
+                        box_spawn_coords = [sample(self.coords[0], 1)[0], sample(coords[1], 1)[0]]
                 else:
-                    coords[0] = list(set(coords[0]) - set(block_coords[0]))
-                box_spawn_coords = [sample(coords[0], 1)[0], sample(coords[1], 1)[0]]
+                    if len(coords[1]) != 0:
+                        box_spawn_coords = [sample(self.coords[0], 1)[0], sample(coords[1], 1)[0]]
+                    else:
+                        box_spawn_coords = [sample(coords[0], 1)[0], sample(self.coords[1], 1)[0]]
                 box = environment.Box(box_spawn_coords)
                 sprite_groups.environment_group.add(box)
-                for x in range(box_spawn_coords[0] - (box.rect.right - box.rect.left),
-                               box_spawn_coords[0] + (box.rect.right - box.rect.left)):
+                for x in range(box_spawn_coords[0] - (enemy_for_coords.rect.right - enemy_for_coords.rect.left),
+                               box_spawn_coords[0] + (enemy_for_coords.rect.right - enemy_for_coords.rect.left)):
                     block_coords[0].append(x)
                 for y in range(box_spawn_coords[1] - (box.rect.bottom - box.rect.top),
                                box_spawn_coords[1] + (box.rect.bottom - box.rect.top)):
                     block_coords[1].append(y)
+                coords[0] = list(set(coords[0]) - set(block_coords[0]))
+                coords[1] = list(set(coords[1]) - set(block_coords[1]))
 
-            # выбор координат для врагов без пересечения с коробками
+
+                # выбор координат для врагов без пересечения с коробками
+
 
             for enemy_spawn in range(enemy_count):
-                x_or_y_answer = sample(x_or_y, 1)[0]
-                if x_or_y_answer == 'x' and len(list(set(coords[0]) - set(block_coords[0]))) != 0:
-                    coords[0] = list(set(coords[0]) - set(block_coords[0]))
-                elif x_or_y_answer == 'y' and len(list(set(coords[1]) - set(block_coords[1]))) != 0:
-                    coords[1] = list(set(coords[1]) - set(block_coords[1]))
+                x_or_y_answer = sample(x_or_y, 1)
+                if x_or_y_answer == 'x':
+                    if len(coords[0]) != 0:
+                        enemy_spawn_coords = [sample(coords[0], 1)[0], sample(self.coords[1], 1)[0]]
+                    else:
+                        enemy_spawn_coords = [sample(self.coords[0], 1)[0], sample(coords[1], 1)[0]]
                 else:
-                    coords[0] = list(set(coords[0]) - set(block_coords[0]))
-                enemy_spawn_coords = [sample(coords[0], 1)[0], sample(coords[1], 1)[0]]
+                    if len(coords[1]) != 0:
+                        enemy_spawn_coords = [sample(self.coords[0], 1)[0], sample(coords[1], 1)[0]]
+                    else:
+                        enemy_spawn_coords = [sample(coords[0], 1)[0], sample(self.coords[1], 1)[0]]
                 new_enemy = creatures.Enemy(self.screen, enemy_spawn_coords, randint(1, 2),
                                             self.extra_hp, self.extra_speed_bullets)
                 sprite_groups.enemys.add(new_enemy)
-                block_coords[0].append(enemy_spawn_coords[0])
-                block_coords[1].append(enemy_spawn_coords[1])
+                for x in range(box_spawn_coords[0] - 20,
+                               box_spawn_coords[0] + 20):
+                    block_coords[0].append(x)
+                for y in range(box_spawn_coords[1] - 20,
+                               box_spawn_coords[1] + 20):
+                    block_coords[1].append(y)
+                coords[0] = list(set(coords[0]) - set(block_coords[0]))
+                coords[1] = list(set(coords[1]) - set(block_coords[1]))
 
     def next_room(self, p):
 
