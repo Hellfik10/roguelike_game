@@ -53,7 +53,7 @@ def events(screen, player):
                     player.ammos -= 1
 
 
-def update_bullets(enemys, bullets, w, h, lives=True):
+def update_bullets(enemys, bullets, w, h):
     # Обновление пуль
     bullets.update()
     for bullet in bullets.copy():
@@ -64,7 +64,7 @@ def update_bullets(enemys, bullets, w, h, lives=True):
         for player in enemys:
             player.HP -= len(collisions)
             if player.HP < 1:
-                sys.exit()
+                player.game_over = True
     elif enemys == sprite_groups.environment_group:
         pygame.sprite.groupcollide(enemys, bullets, True, True)
     else:

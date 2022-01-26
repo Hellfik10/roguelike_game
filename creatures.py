@@ -11,6 +11,7 @@ v = 2
 class Player(pygame.sprite.Sprite):
     def __init__(self, screen):
         super(Player, self).__init__()
+        self.game_over = False
         self.knopka = None
         self.add(sprite_groups.all_sprites)
         self.cur_frame = 0
